@@ -15,7 +15,7 @@ export class UserController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'List one user' })
+  @ApiOperation({ summary: 'Show a user' })
 
   async findOne(@Param('id') id: number): Promise<User> {
     return await this.userService.findOne(id);

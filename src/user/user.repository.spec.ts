@@ -47,7 +47,7 @@ describe('UserRepository', () => {
     });
 
     describe('Testing findOne from UserRepository', () => {
-        it('should return a single users', async () => {
+        it('should return a single user', async () => {
             const userRepositoryFindOneBySucessResult: User = new User()
             jest.spyOn(userRepo, 'findOne')
             .mockResolvedValue(userRepositoryFindOneBySucessResult);

@@ -54,7 +54,7 @@ describe('UserController', () => {
   });
 
   describe('Testing findOne function from UserController', () => {
-    it('should return a sigle user', async () => {
+    it('should return a single user', async () => {
       const userControllerFindOneSucessResult: User = new User({
         id: 1,
         email: "test1@email.com.br",
