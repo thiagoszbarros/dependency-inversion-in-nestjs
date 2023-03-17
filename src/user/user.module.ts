@@ -22,8 +22,8 @@ import { IUserService } from './interfaces/user-service.interface';
   ],
   exports: [
     TypeOrmModule,
-    IUserRepo,
     IUserService,
+    IUserRepo,
   ]
 })
 export class UserModule { }
