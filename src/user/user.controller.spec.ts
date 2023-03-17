@@ -40,8 +40,8 @@ describe('UserController', () => {
     it('should return a list of users', async () => {
       const userControllerFindAllSucessResult: User[] = [
         new User({
-          "id": 1,
-          "email": "test1@email.com.br",
+          id: 1,
+          email: "test1@email.com.br",
         }),
       ];
       jest.spyOn(userService, 'findAll')

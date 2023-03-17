@@ -41,8 +41,8 @@ describe('UserService', () => {
     it('should return a list of users', async () => {
       const userServiceFindAllSucessResult: User[] = [
         new User({
-          "id": 1,
-          "email": "test1@email.com.br",
+          id: 1,
+          email: "test1@email.com.br",
         }),
       ];
       jest.spyOn(userService, 'findAll')
@@ -57,8 +57,8 @@ describe('UserService', () => {
   describe('Testing findOne from UserService', () => {
     it('should return a single user', async () => {
       const userServiceFindOneSucessResult: User = new User({
-        "id": 1,
-        "email": "test1@email.com.br",
+        id: 1,
+        email: "test1@email.com.br",
       });
       jest.spyOn(userService, 'findOne')
         .mockResolvedValue(userServiceFindOneSucessResult);
