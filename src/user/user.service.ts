@@ -13,6 +13,6 @@ export class UserService {
   }
 
   async findOne(id: number): Promise<User> {
-    return await this.usersRepository.findOneBy(id);
+    return await this.usersRepository.findOne(id);
   }
 }

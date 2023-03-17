@@ -19,7 +19,7 @@ export class UserRepo implements IUserRepo {
         );
     }
 
-    async findOneBy(id: number): Promise<User> {
+    async findOne(id: number): Promise<User> {
         return await this.usersRepository.findOne({
             select: ['id', 'email'],
             where: [{ id: id }],
