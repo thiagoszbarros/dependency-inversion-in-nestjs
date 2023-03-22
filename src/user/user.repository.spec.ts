@@ -56,4 +56,22 @@ describe('UserRepository', () => {
             expect(result).toEqual(userRepositoryFindOneBySucessResult);
         })
     })
+
+    describe('Testing create function from UserRepo', () => {
+        it('should create a new user', async () => {
+          const createUserDto = {
+            name: "Test1",
+            lastName: "Test1",
+            email: "test1@email.com",
+            password: "sosecure"
+          }
+          const userRepoCreateSucessResult = new User();
+          jest.spyOn(userRepo, 'create')
+            .mockResolvedValue(userRepoCreateSucessResult);
+          const result = await userRepo.create(createUserDto);
+          expect(result).toEqual(userRepoCreateSucessResult);
+          expect(result.email).toEqual(userRepoCreateSucessResult.email);
+          expect(result.id).toEqual(userRepoCreateSucessResult.id);
+        })
+      })
 });
