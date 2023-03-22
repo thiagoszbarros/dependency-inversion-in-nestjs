@@ -61,8 +61,7 @@ describe('UserController', () => {
       })
       jest.spyOn(userService, 'findOne')
         .mockResolvedValue(userControllerFindOneSucessResult);
-      const id = 1;
-      const result = await userController.findOne(id);
+      const result = await userController.findOne(userControllerFindOneSucessResult.id);
       expect(result).toEqual(userControllerFindOneSucessResult);
       expect(result.id).toEqual(id);
     })
