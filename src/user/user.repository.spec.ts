@@ -49,10 +49,10 @@ describe('UserRepository', () => {
                     provide: getRepositoryToken(User),
                     useValue:
                     {
-                        id: 1,
-                        email: "test1@email.com.br",
-                    }
-                },
+                        find: jest.fn().mockResolvedValue(userEntityFindSucessResult),
+                        findOne: jest.fn().mockResolvedValue(userEntityFindOneSucessResult),
+                        save: jest.fn().mockResolvedValue(userEntitySaveSucessResult),
+                    },
             ]
         }).compile();
 
