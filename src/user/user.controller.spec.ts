@@ -64,7 +64,7 @@ describe('UserController', () => {
         .mockResolvedValue(userControllerFindOneSucessResult);
       const result = await userController.findOne(userControllerFindOneSucessResult.id);
       expect(result).toEqual(userControllerFindOneSucessResult);
-      expect(result.id).toEqual(id);
+      expect(result.id).toEqual(userControllerFindOneSucessResult.id);
     })
   });
 });
