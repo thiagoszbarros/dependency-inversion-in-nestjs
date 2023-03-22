@@ -75,44 +75,31 @@ describe('UserRepository', () => {
 
     describe('Testing findAll from UserRepository', () => {
         it('should return a list of users', async () => {
-            const userRepositoryFindAllSucessResult: User[] = [
-                new User(),
-                new User(),
-                new User(),
-            ]
-            jest.spyOn(userRepo, 'findAll')
-            .mockResolvedValue(userRepositoryFindAllSucessResult);
             const result = await userRepo.findAll();
-            expect(result).toEqual(userRepositoryFindAllSucessResult);
+            expect(genericRepo.find).toBeCalled();
+            expect(genericRepo.find).toHaveBeenCalledTimes(1);
+            expect(result).toEqual(userEntityFindSucessResult);
         })
     });
 
     describe('Testing findOne from UserRepository', () => {
         it('should return a single user', async () => {
-            const userRepositoryFindOneBySucessResult: User = new User()
-            jest.spyOn(userRepo, 'findOne')
-            .mockResolvedValue(userRepositoryFindOneBySucessResult);
             const id = 1;
             const result = await userRepo.findOne(id);
-            expect(result).toEqual(userRepositoryFindOneBySucessResult);
+            expect(genericRepo.findOne).toBeCalled();
+            expect(genericRepo.findOne).toHaveBeenCalledTimes(1);
+            expect(result).toEqual(userEntityFindOneSucessResult);
         })
     })
 
     describe('Testing create function from UserRepo', () => {
         it('should create a new user', async () => {
-          const createUserDto = {
-            name: "Test1",
-            lastName: "Test1",
-            email: "test1@email.com",
-            password: "sosecure"
-          }
-          const userRepoCreateSucessResult = new User();
-          jest.spyOn(userRepo, 'create')
-            .mockResolvedValue(userRepoCreateSucessResult);
-          const result = await userRepo.create(createUserDto);
-          expect(result).toEqual(userRepoCreateSucessResult);
-          expect(result.email).toEqual(userRepoCreateSucessResult.email);
-          expect(result.id).toEqual(userRepoCreateSucessResult.id);
+            const result = await userRepo.create(createUserDto);
+            expect(genericRepo.save).toBeCalled();
+            expect(genericRepo.save).toHaveBeenCalledTimes(1);
+            expect(result).toEqual(userEntitySaveSucessResult);
+            expect(result.email).toEqual(userEntitySaveSucessResult.email);
+            expect(result.id).toEqual(userEntitySaveSucessResult.id);
         })
-      })
+    })
 });
