@@ -70,4 +70,25 @@ describe('UserService', () => {
       expect(result.id).toBe(id);
     })
   });
+
+  describe('Testing create function from UserService', () => {
+    it('should create a new user', async () => {
+      const createUserDto = {
+        name: "Test1",
+        lastName: "Test1",
+        email: "test1@email.com",
+        password: "sosecure"
+      }
+      const userServiceCreateSucessResult = new User({
+        id: 1,
+        email: "test1@email.com",
+      })
+      jest.spyOn(userService, 'create')
+        .mockResolvedValue(userServiceCreateSucessResult);
+      const result = await userService.create(createUserDto);
+      expect(result).toEqual(userServiceCreateSucessResult);
+      expect(result.email).toEqual(userServiceCreateSucessResult.email);
+      expect(result.id).toEqual(userServiceCreateSucessResult.id);
+    })
+  })
 });
