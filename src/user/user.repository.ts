@@ -26,6 +26,10 @@ export class UserRepo implements IUserRepo {
             where: [{ id: id }],
         });
     }
+
+    async create(createUserDto: CreateUserDto): Promise<User> {
+        return await this.usersRepository.save(createUserDto);
+    }
 }
 
 
