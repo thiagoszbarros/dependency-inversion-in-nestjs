@@ -21,4 +21,10 @@ export class UserController {
   async findOne(@Param('id') id: number): Promise<User> {
     return await this.userService.findOne(id);
   }
+
+  @Post()
+  @ApiOperation({ summary: 'Create a new user' })
+  async create(@Body() createUserDto: CreateUserDto): Promise<User> {
+    return await this.userService.create(createUserDto);
+  }
 }
