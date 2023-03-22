@@ -4,7 +4,38 @@ import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { UserRepo } from './user.repository';
 
-
+const userEntityFindSucessResult = [
+    new User({
+        id: 1,
+        email: "test1@email.com.br",
+    }),
+    new User({
+        id: 2,
+        email: "test2@email.com.br",
+    }),
+    new User(
+        {
+            id: 3,
+            email: "test3@email.com.br",
+        }
+    )
+];
+const userEntityFindOneSucessResult = new User({
+    id: 1,
+    email: "test1@email.com.br",
+});
+const userEntitySaveSucessResult = new User(
+    {
+        id: 1,
+        email: "test1@email.com.br",
+    }
+);
+const createUserDto = {
+    name: "Test1",
+    lastName: "Test1",
+    email: "test1@email.com.br",
+    password: "sosecure"
+}
 
 describe('UserRepository', () => {
     let userRepo: UserRepo;
