@@ -60,7 +60,7 @@ describe('UserController', () => {
         id: 1,
         email: "test1@email.com.br",
       })
-      jest.spyOn(userService, 'findOne')
+      jest.spyOn(userController, 'findOne')
         .mockResolvedValue(userControllerFindOneSucessResult);
       const result = await userController.findOne(userControllerFindOneSucessResult.id);
       expect(result).toEqual(userControllerFindOneSucessResult);
