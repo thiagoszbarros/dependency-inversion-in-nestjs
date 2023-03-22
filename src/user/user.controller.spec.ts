@@ -4,6 +4,29 @@ import { User } from './entities/user.entity';
 import { IUserService } from './interfaces/user-service.interface';
 import { UserController } from './user.controller';
 
+const userControllerFindAllSucessResult: User[] = [
+  new User({
+    id: 1,
+    email: "test1@email.com.br",
+  }),
+];
+
+const userControllerFindOneSucessResult: User = new User({
+  id: 1,
+  email: "test1@email.com.br",
+})
+
+const userControllerCreateSucessResult = new User({
+  id: 1,
+  email: "test1@email.com",
+})
+
+const createUserDto: CreateUserDto = {
+  name: "Test1",
+  lastName: "Test1",
+  email: "test1@email.com",
+  password: "sosecure"
+}
 
 describe('UserController', () => {
   let userController: UserController;
@@ -15,9 +38,9 @@ describe('UserController', () => {
       providers: [{
         provide: IUserService,
         useValue: {
-          findAll: () => jest.fn(),
-          findOne: () => jest.fn(),
-          create: () => jest.fn(),
+          findAll: jest.fn().mockResolvedValue(userControllerFindAllSucessResult),
+          findOne: jest.fn().mockResolvedValue(userControllerFindOneSucessResult),
+          create: jest.fn().mockResolvedValue(userControllerCreateSucessResult),
         },
       }]
     }).compile();
@@ -40,15 +63,9 @@ describe('UserController', () => {
 
   describe('Testing findAll function from UserController', () => {
     it('should return a list of users', async () => {
-      const userControllerFindAllSucessResult: User[] = [
-        new User({
-          id: 1,
-          email: "test1@email.com.br",
-        }),
-      ];
-      jest.spyOn(userController, 'findAll')
-        .mockResolvedValue(userControllerFindAllSucessResult);
       const result = await userController.findAll();
+      expect(userService.findAll).toBeCalled();
+      expect(userService.findAll).toHaveBeenCalledTimes(1);
       expect(result).toEqual(userControllerFindAllSucessResult);
       expect(typeof (result)).toBe('object');
       expect(result.length).toBe(1);
@@ -57,13 +74,9 @@ describe('UserController', () => {
 
   describe('Testing findOne function from UserController', () => {
     it('should return a single user', async () => {
-      const userControllerFindOneSucessResult: User = new User({
-        id: 1,
-        email: "test1@email.com.br",
-      })
-      jest.spyOn(userController, 'findOne')
-        .mockResolvedValue(userControllerFindOneSucessResult);
       const result = await userController.findOne(userControllerFindOneSucessResult.id);
+      expect(userService.findOne).toBeCalled();
+      expect(userService.findOne).toHaveBeenCalledTimes(1);
       expect(result).toEqual(userControllerFindOneSucessResult);
       expect(result.id).toEqual(userControllerFindOneSucessResult.id);
     })
@@ -71,19 +84,9 @@ describe('UserController', () => {
 
   describe('Testing create function from UserController', () => {
     it('should create a new user', async () => {
-      const CreateUserDto: CreateUserDto = {
-        name: "Test1",
-        lastName: "Test1",
-        email: "test1@email.com",
-        password: "sosecure"
-      }
-      const userControllerCreateSucessResult = new User({
-        id: 1,
-        email: "test1@email.com",
-      })
-      jest.spyOn(userController, 'create')
-        .mockResolvedValue(userControllerCreateSucessResult);
-      const result = await userController.create(CreateUserDto);
+      const result = await userController.create(createUserDto);
+      expect(userService.create).toBeCalled();
+      expect(userService.create).toHaveBeenCalledTimes(1);
       expect(result).toEqual(userControllerCreateSucessResult);
       expect(result.email).toEqual(userControllerCreateSucessResult.email);
       expect(result.id).toEqual(userControllerCreateSucessResult.id);

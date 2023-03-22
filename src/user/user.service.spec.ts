@@ -2,6 +2,31 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { User } from './entities/user.entity';
 import { IUserRepo } from './interfaces/user-repo.interface';
 import { UserService } from './user.service';
+import * as bcrypt from 'bcrypt';
+
+const userServiceFindAllSucessResult: User[] = [
+  new User({
+    id: 1,
+    email: "test1@email.com.br",
+  }),
+];
+
+const userServiceFindOneSucessResult: User = new User({
+  id: 1,
+  email: "test1@email.com.br",
+});
+
+const userServiceCreateSucessResult = new User({
+  id: 1,
+  email: "test1@email.com",
+})
+
+const createUserDto = {
+  name: "Test1",
+  lastName: "Test1",
+  email: "test1@email.com",
+  password: "sosecure"
+}
 
 describe('UserService', () => {
   let userService: UserService;
@@ -14,9 +39,9 @@ describe('UserService', () => {
         {
           provide: IUserRepo,
           useValue: {
-            findAll: jest.fn(),
-            findOneBy: jest.fn(),
-            create: jest.fn(),
+            findAll: jest.fn().mockResolvedValue(userServiceFindAllSucessResult),
+            findOne: jest.fn().mockResolvedValue(userServiceFindOneSucessResult),
+            create: jest.fn().mockResolvedValue(userServiceCreateSucessResult),
           }
         }
       ],
@@ -40,14 +65,6 @@ describe('UserService', () => {
 
   describe('Testing findAll from UserService', () => {
     it('should return a list of users', async () => {
-      const userServiceFindAllSucessResult: User[] = [
-        new User({
-          id: 1,
-          email: "test1@email.com.br",
-        }),
-      ];
-      jest.spyOn(userService, 'findAll')
-        .mockResolvedValue(userServiceFindAllSucessResult);
       const result = await userService.findAll();
       expect(result).toEqual(userServiceFindAllSucessResult);
       expect(typeof (result)).toBe('object');
@@ -57,12 +74,6 @@ describe('UserService', () => {
 
   describe('Testing findOne from UserService', () => {
     it('should return a single user', async () => {
-      const userServiceFindOneSucessResult: User = new User({
-        id: 1,
-        email: "test1@email.com.br",
-      });
-      jest.spyOn(userService, 'findOne')
-        .mockResolvedValue(userServiceFindOneSucessResult);
       const id: number = 1;
       const result = await userService.findOne(id);
       expect(result).toEqual(userServiceFindOneSucessResult);
@@ -73,22 +84,19 @@ describe('UserService', () => {
 
   describe('Testing create function from UserService', () => {
     it('should create a new user', async () => {
-      const createUserDto = {
-        name: "Test1",
-        lastName: "Test1",
-        email: "test1@email.com",
-        password: "sosecure"
-      }
-      const userServiceCreateSucessResult = new User({
-        id: 1,
-        email: "test1@email.com",
-      })
-      jest.spyOn(userService, 'create')
-        .mockResolvedValue(userServiceCreateSucessResult);
       const result = await userService.create(createUserDto);
       expect(result).toEqual(userServiceCreateSucessResult);
       expect(result.email).toEqual(userServiceCreateSucessResult.email);
       expect(result.id).toEqual(userServiceCreateSucessResult.id);
+    })
+  })
+
+  describe('Testing hashPassword function from UserService', () => {
+    it('should return true when compared with given password', async () => {
+      const password = "sosecure";
+      const userServiceHashPasswordSucessResult = await userService.hashPassword(password);
+      const result = await bcrypt.compare(password, userServiceHashPasswordSucessResult);
+      expect(result).toBe(true);
     })
   })
 });
