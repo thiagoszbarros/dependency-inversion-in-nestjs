@@ -39,7 +39,8 @@ const createUserDto = {
 
 describe('UserRepository', () => {
     let userRepo: UserRepo;
-    
+    let genericRepo: Repository<User>;
+
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [
@@ -56,6 +57,7 @@ describe('UserRepository', () => {
         }).compile();
 
         userRepo = module.get<UserRepo>(UserRepo);
+        genericRepo = module.get(getRepositoryToken(User));
     });
 
     describe('UserRepository', () => {
