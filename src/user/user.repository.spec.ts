@@ -53,7 +53,8 @@ describe('UserRepository', () => {
                         findOne: jest.fn().mockResolvedValue(userEntityFindOneSucessResult),
                         save: jest.fn().mockResolvedValue(userEntitySaveSucessResult),
                     },
-            ]
+                },
+            ],
         }).compile();
 
         userRepo = module.get<UserRepo>(UserRepo);
