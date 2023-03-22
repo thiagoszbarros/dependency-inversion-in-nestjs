@@ -67,6 +67,12 @@ describe('UserRepository', () => {
         });
     })
 
+    describe('Generic Repo', () => {
+        it('should be defined', async () => {
+            expect(genericRepo).toBeDefined();
+        });
+    })
+
     describe('Testing findAll from UserRepository', () => {
         it('should return a list of users', async () => {
             const userRepositoryFindAllSucessResult: User[] = [
