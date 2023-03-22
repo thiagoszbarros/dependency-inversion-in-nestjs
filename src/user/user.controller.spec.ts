@@ -67,4 +67,25 @@ describe('UserController', () => {
       expect(result.id).toEqual(userControllerFindOneSucessResult.id);
     })
   });
+
+  describe('Testing create function from UserController', () => {
+    it('should create a new user', async () => {
+      const CreateUserDto: CreateUserDto = {
+        name: "Test1",
+        lastName: "Test1",
+        email: "test1@email.com",
+        password: "sosecure"
+      }
+      const userControllerCreateSucessResult = new User({
+        id: 1,
+        email: "test1@email.com",
+      })
+      jest.spyOn(userController, 'create')
+        .mockResolvedValue(userControllerCreateSucessResult);
+      const result = await userController.create(CreateUserDto);
+      expect(result).toEqual(userControllerCreateSucessResult);
+      expect(result.email).toEqual(userControllerCreateSucessResult.email);
+      expect(result.id).toEqual(userControllerCreateSucessResult.id);
+    })
+  })
 });
